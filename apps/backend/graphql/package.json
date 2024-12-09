@@ -1,0 +1,36 @@
+{
+    "name": "graphql",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build:proto": "bash scripts/build_proto.sh",
+        "build": "tsc",
+        "postbuild": "copyfiles -u 1 \"src/**/*.{json,sql,csv,graphql}\" build/",
+        "start": "node build/app.js",
+        "dev": "nodemon --watch src --exec \"npm run build && node build/app.js\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^3.1.7",
+        "typescript": "^5.7.2"
+    },
+    "dependencies": {
+        "@apollo/server": "^4.11.2",
+        "@graphql-tools/graphql-file-loader": "^8.0.6",
+        "@graphql-tools/load": "^8.0.7",
+        "@graphql-tools/load-files": "^7.0.0",
+        "@graphql-tools/merge": "^9.0.12",
+        "@grpc/grpc-js": "^1.12.4",
+        "@grpc/proto-loader": "^0.7.13",
+        "apollo-server-express": "^3.13.0",
+        "copyfiles": "^2.4.1",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.1",
+        "graphql": "^16.9.0",
+        "ts-node": "^10.9.2"
+    }
+}

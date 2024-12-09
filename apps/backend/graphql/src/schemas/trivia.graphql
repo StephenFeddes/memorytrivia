@@ -1,0 +1,13 @@
+type Query {
+    getQuestion(difficulty: String!, category: String!): Question
+}
+
+type Question {
+    id: Int
+    prompt: String
+    choices: [String]
+}
+
+type Mutation {
+    _empty: String
+}

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package account;
+
+option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/api/grpc";
+
+service AccountService {
+    rpc GetAccount(GetAccountRequest) returns (Account) {};
+    rpc CreateAccount(CreateAccountRequest) returns (Account) {};
+}
+
+message GetAccountRequest {
+    uint64 id = 1;
+}
+
+message CreateAccountRequest {
+    string username = 1;
+    string email = 2;
+    string password = 3;
+}
+
+message Account {
+    uint64 id = 1;
+    string username = 2;
+    string email = 3;
+    string password = 4;
+}
