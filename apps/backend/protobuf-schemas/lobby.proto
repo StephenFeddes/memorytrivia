@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package lobby;
+
+option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructures/grpc/protobufs";
+
+service LobbyService {
+    rpc GetLobby(GetLobbyRequest) returns (Lobby) {};
+    rpc CreateLobby(CreateLobbyRequest) returns (CreateLobbyResponse) {};
+    rpc UpdateLobby(UpdateLobbyRequest) returns (UpdateLobbyResponse) {};
+    rpc DeleteLobby(DeleteLobbyRequest) returns (DeleteLobbyResponse) {};
+}
+
+message CreateLobbyRequest {
+    uint32 size = 1;
+    uint64 owner_id = 2;
+}
+
+message CreateLobbyResponse {
+    string status = 1;
+}
+
+message GetLobbyRequest {
+    uint64 id = 1;
+}
+
+message UpdateLobbyRequest {
+    uint64 id = 1;
+    uint32 size = 2;
+}
+
+message UpdateLobbyResponse {
+    string status = 1;
+}
+
+message DeleteLobbyRequest {
+    uint64 id = 1;
+}
+
+message DeleteLobbyResponse {
+    string status = 1;
+}
+
+message Lobby {
+    uint64 id = 1;
+    uint32 size = 2;
+    uint64 owner_id = 3;
+    repeated uint64 member_ids = 4;
+}

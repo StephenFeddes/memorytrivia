@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package trivia;
+
+option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/trivia/internal/infrastructures/grpc/protobufs";
+
+service TriviaService {
+    rpc GetQuestion(GetQuestionRequest) returns (Question) {};
+}
+
+message GetQuestionRequest {
+    string difficulty = 1;
+    string category = 2;
+}
+
+message Question {
+    uint32 id = 1;
+    string prompt = 2;
+    repeated string choices = 3;
+}

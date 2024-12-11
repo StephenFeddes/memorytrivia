@@ -41,38 +41,37 @@ services:
     networks:
       - app-network
 
-  graphql:
+  # graphql:
+  #   build:
+  #     context: ./graphql
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-network
+  #   volumes:
+  #     - ./graphql:/app
+  #     - /app/build
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #   environment:
+  #     LOBBY_GRPC_PORT: ${LOBBY_GRPC_PORT}
+  #     PORT: 3000
+
+  lobby:
     build:
-      context: ./graphql
+      context: ./services/lobby
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "${LOBBY_GRPC_PORT}:${LOBBY_GRPC_PORT}"
     networks:
       - app-network
     volumes:
-      - ./graphql:/app
-      - /app/build
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    environment:
-      TRIVIA_PORT: ${TRIVIA_PORT}
-      ACCOUNT_PORT: ${ACCOUNT_PORT}
-      PORT: 3000
-
-  trivia:
-    build:
-      context: ./services/trivia
-      dockerfile: Dockerfile
-    ports:
-      - "${TRIVIA_PORT}:${TRIVIA_PORT}"
-    networks:
-      - app-network
-    volumes:
-      - ./services/trivia:/app
+      - ./services/lobby:/app
       - /app/bin
     depends_on:
       - mongodb
     environment:
-      PORT: ${TRIVIA_PORT}
+      GRPC_PORT: ${LOBBY_GRPC_PORT}
 
 volumes:
   postgres_data:

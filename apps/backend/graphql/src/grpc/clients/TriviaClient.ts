@@ -1,10 +1,10 @@
 import path from "path";
 import * as grpc from "@grpc/grpc-js";
 import * as protoloader from "@grpc/proto-loader";
-import { ProtoGrpcType } from "../types/trivia";
-import { TriviaServiceClient } from "../types/trivia/TriviaService";
-import { GetQuestionRequest } from "../types/trivia/GetQuestionRequest";
-import { Question } from "../types/trivia/Question";
+import { ProtoGrpcType } from "../protobufs/trivia";
+import { TriviaServiceClient } from "../protobufs/trivia/TriviaService";
+import { GetQuestionRequest } from "../protobufs/trivia/GetQuestionRequest";
+import { Question } from "../protobufs/trivia/Question";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -13,7 +13,10 @@ class TriviaClient {
         ? parseInt(process.env.TRIVIA_PORT, 10)
         : 3002;
 
-    private readonly PROTO_FILE: string = "../../../../protobufs/trivia.proto";
+    private readonly PROTO_FILE: string = path.join(
+        process.cwd(),
+        "protobuf-schemas/trivia.proto"
+    );
 
     private client: TriviaServiceClient;
 
@@ -27,10 +30,10 @@ class TriviaClient {
         ) as unknown as ProtoGrpcType;
 
         // Create the gRPC client
-        this.client = new packageObject.trivia.TriviaService(
-            `localhost:${this.PORT}`,
-            grpc.credentials.createInsecure()
-        );
+       this.client = new packageObject.trivia.TriviaService(
+           `trivia:${this.PORT}`, // Note: `trivia` is the name of the service defined in `docker-compose.yml`
+           grpc.credentials.createInsecure()
+       );
     }
 
     /**
