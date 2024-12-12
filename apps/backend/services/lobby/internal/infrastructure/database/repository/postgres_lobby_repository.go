@@ -21,6 +21,7 @@ func (r *PostgresLobbyRepository) CreateLobby(size uint32, ownerID uint32) error
 		log.Fatal(err)
 	}
 
+	// Insert the owner into the member table
 	stmt, err := tx.Prepare("INSERT INTO member (id) VALUES ($1)")
 	if err != nil {
 		tx.Rollback()
@@ -34,20 +35,15 @@ func (r *PostgresLobbyRepository) CreateLobby(size uint32, ownerID uint32) error
 		log.Fatal(err)
 	}
 
-	var lobbyID uint32
-	stmt, err = tx.Prepare("INSERT INTO lobby (size, owner_id) VALUES ($1, $2) RETURNING id")
-	if err != nil {
-		tx.Rollback()
-		log.Fatal(err)
-	}
-	defer stmt.Close()
-
-	err = stmt.QueryRow(size, ownerID).Scan(&lobbyID)
+	// Insert the lobby and retrieve the generated ID
+	var lobbyID int64
+	err = tx.QueryRow("INSERT INTO lobby (size, owner_id) VALUES ($1, $2) RETURNING id", size, ownerID).Scan(&lobbyID)
 	if err != nil {
 		tx.Rollback()
 		log.Fatal(err)
 	}
 
+	// Insert the lobby owner into the lobby_member table
 	stmt, err = tx.Prepare("INSERT INTO lobby_member (lobby_id, member_id) VALUES ($1, $2)")
 	if err != nil {
 		tx.Rollback()
@@ -61,6 +57,7 @@ func (r *PostgresLobbyRepository) CreateLobby(size uint32, ownerID uint32) error
 		log.Fatal(err)
 	}
 
+	// Commit the transaction
 	err = tx.Commit()
 	if err != nil {
 		log.Fatal(err)
