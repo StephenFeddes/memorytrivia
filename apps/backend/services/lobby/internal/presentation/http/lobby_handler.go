@@ -44,6 +44,7 @@ func (h *LobbyHTTPHandler) RegisterLobbyServiceHTTPServer(router *http.ServeMux,
 func (h *LobbyHTTPHandler) getLobby(w http.ResponseWriter, r *http.Request) {
 	log.Println("Testing!")
 	lobbyId := r.PathValue("id")
+
 	log.Printf("Getting lobby with id: %s", lobbyId)
 
 	// Use grpc.NewClient to create the client connection
