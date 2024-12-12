@@ -13,7 +13,7 @@ service LobbyService {
 
 message CreateLobbyRequest {
     uint32 size = 1;
-    uint64 owner_id = 2;
+    uint32 owner_id = 2;
 }
 
 message CreateLobbyResponse {
@@ -21,11 +21,11 @@ message CreateLobbyResponse {
 }
 
 message GetLobbyRequest {
-    uint64 id = 1;
+    uint32 id = 1;
 }
 
 message UpdateLobbyRequest {
-    uint64 id = 1;
+    uint32 id = 1;
     uint32 size = 2;
 }
 
@@ -34,7 +34,7 @@ message UpdateLobbyResponse {
 }
 
 message DeleteLobbyRequest {
-    uint64 id = 1;
+    uint32 id = 1;
 }
 
 message DeleteLobbyResponse {
@@ -42,8 +42,9 @@ message DeleteLobbyResponse {
 }
 
 message Lobby {
-    uint64 id = 1;
+    uint32 id = 1;
     uint32 size = 2;
-    uint64 owner_id = 3;
-    repeated uint64 member_ids = 4;
+    uint32 owner_id = 3;
+    repeated uint32 member_ids = 4;
+    string created_at = 5;
 }

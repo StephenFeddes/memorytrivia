@@ -2,16 +2,36 @@ package createlobby
 
 import (
 	"context"
-
-	pb "github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructure/grpc/protobufs"
+	"errors"
 )
 
-type CreateLobby struct{}
-
-func NewCreateLobby() *CreateLobby {
-	return &CreateLobby{}
+type DatabaseLobbyCreator interface {
+	CreateLobby(size uint32, ownerID uint32) error
 }
 
-func (c *CreateLobby) Execute(ctx context.Context, lobby *pb.CreateLobbyRequest) (string, error) {
-	return "success", nil
+type CreateLobby struct {
+	db DatabaseLobbyCreator
+}
+
+func NewCreateLobby(db DatabaseLobbyCreator) *CreateLobby {
+	return &CreateLobby{db: db}
+}
+
+func (c *CreateLobby) Execute(ctx context.Context, size uint32, ownerID uint32) (string, error) {
+	// Validate input
+	if size <= 1 {
+		errMsg := "size must be greater than 1"
+		return errMsg, errors.New(errMsg)
+	} else if size > 4 {
+		errMsg := "size must be less than or equal to 4"
+		return errMsg, errors.New(errMsg)
+	}
+
+	// Create lobby
+	err := c.db.CreateLobby(size, ownerID); if err != nil {
+		return "", err
+	}
+
+	// Return success message
+	return "lobby created", nil
 }

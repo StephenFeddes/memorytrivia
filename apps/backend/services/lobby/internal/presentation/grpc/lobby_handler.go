@@ -7,7 +7,7 @@ import (
 )
 
 type LobbyGetter interface {
-	Execute(context.Context, uint64) (*protobufs.Lobby, error)
+	Execute(context.Context, uint32) (*protobufs.Lobby, error)
 }
 
 type LobbyGRPCHandler struct {

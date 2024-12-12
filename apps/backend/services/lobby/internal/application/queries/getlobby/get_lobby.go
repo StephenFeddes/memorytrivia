@@ -12,11 +12,11 @@ func NewGetLobby() *GetLobby {
 	return &GetLobby{}
 }
 
-func (g *GetLobby) Execute(ctx context.Context, id uint64) (*pb.Lobby, error) {
+func (g *GetLobby) Execute(ctx context.Context, id uint32) (*pb.Lobby, error) {
 	return &pb.Lobby{
 		Id: 1,
 		Size: 2,
 		OwnerId: 1,
-		MemberIds: []uint64{1, 2},
+		MemberIds: []uint32{1, 2},
 	}, nil
 }

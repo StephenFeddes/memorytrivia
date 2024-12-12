@@ -1,0 +1,3 @@
+CREATE TABLE member (
+    id INTEGER PRIMARY KEY
+);

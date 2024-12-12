@@ -4,15 +4,15 @@ import (
 	"log"
 	"net"
 
-	getLobby "github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/application/queries/getlobby"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructure/database"
-	grpcHandler "github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/presentation/grpc"
+	getAccount "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/application/queries/getaccount"
+	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/database"
+	grpcHandler "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/presentation/grpc"
 	"google.golang.org/grpc"
 )
 
 type gRPCServer struct {
 	address string
-	db 	*database.PostgresDB
+	db      *database.PostgresDB
 }
 
 func NewGRPCServer(address string, db *database.PostgresDB) *gRPCServer {
@@ -28,9 +28,9 @@ func (s *gRPCServer) Run() error {
 	// Create a new gRPC server
 	grpcServer := grpc.NewServer()
 
-	getLobby := getLobby.NewGetLobby()
-	lobbyHandler := grpcHandler.NewLobbyGRPCHandler(getLobby)
-	lobbyHandler.RegisterLobbyServiceGRPCServer(grpcServer)
+	getAccount := getAccount.NewGetAccount()
+	accountHandler := grpcHandler.NewAccountGRPCHandler(getAccount)
+	accountHandler.RegisterAccountServiceGRPCServer(grpcServer)
 
 	log.Printf("🚀 gRPC server is running on port %v", s.address)
 

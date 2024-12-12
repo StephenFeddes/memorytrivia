@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-EXPOSE 80
 EXPOSE 50051
+EXPOSE 80
 
-CMD ["go", "run", "cmd/lobby/main.go"]
+CMD ["go", "run", "cmd/account/main.go"]

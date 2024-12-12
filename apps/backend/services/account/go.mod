@@ -1,4 +1,4 @@
-module github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby
+module github.com/StephenFeddes/memorytrivia/apps/backend/services/account
 
 go 1.23.0
 

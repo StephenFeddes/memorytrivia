@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructure/database"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructure/grpc"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/lobby/internal/infrastructure/http"
+	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/database"
+	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/grpc"
+	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/http"
 )
 
 
