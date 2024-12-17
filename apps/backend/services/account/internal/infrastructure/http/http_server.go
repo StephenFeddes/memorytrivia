@@ -3,17 +3,21 @@ package http
 import (
 	"log"
 	"net/http"
+	"os"
 
-	getAccount "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/application/queries/getaccount"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/database"
-	httpHandler "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/presentation/http"
+	"github.com/StephenFeddes/memorytrivia/account/internal/application/command/loginaccount"
+	"github.com/StephenFeddes/memorytrivia/account/internal/application/command/createaccount"
+	"github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/auth"
+	"github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/database"
+	"github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/database/repository"
+	handler "github.com/StephenFeddes/memorytrivia/account/internal/presentation/http"
 )
 
 // TODO: Use HTTP to send server-sent events, such as a player joining a lobby.
 
 type httpServer struct {
 	address string
-	db 	*database.PostgresDB
+	db      *database.PostgresDB
 }
 
 func NewHTTPServer(address string, db *database.PostgresDB) *httpServer {
@@ -22,12 +26,15 @@ func NewHTTPServer(address string, db *database.PostgresDB) *httpServer {
 
 func (s *httpServer) Run() error {
 	router := http.NewServeMux()
+	accountRepository := repository.NewPostgresAccountRepository(s.db)
+	jwtManager := auth.NewJWT(os.Getenv("JWT_SECRET"))
 
-	getAccount := getAccount.NewGetAccount()
+	createAccount := createaccount.NewCreateAccount(accountRepository, auth.NewBCrypt(), jwtManager)
+	loginAccount := loginaccount.NewLoginAccount(accountRepository, auth.NewBCrypt(), jwtManager)
 
-	prefix := "/lobby/api/v1"
-	lobbyHandler := httpHandler.NewAccountHTTPHandler(getAccount)
-	lobbyHandler.RegisterLobbyServiceHTTPServer(router, prefix+"/lobbies")
+	prefix := "/account/api/v1"
+	accountHandler := handler.NewAccountHTTPHandler(jwtManager, createAccount, loginAccount)
+	accountHandler.RegisterAccountServiceHTTPServer(router, prefix+"/accounts")
 
 	log.Printf("🚀 HTTP server is running on port %v", s.address)
 

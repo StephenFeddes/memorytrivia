@@ -1,10 +1,8 @@
-import { triviaResolvers } from "./trivia";
+import { accountResolvers } from "./account";
 
 export const resolvers = {
     Query: {
-        ...triviaResolvers.Query,
+        ...accountResolvers.Query,
     },
-    Mutation: {
-        
-    },
-}
+    Mutation: {},
+};

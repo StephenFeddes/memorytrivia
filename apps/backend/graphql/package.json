@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build:proto": "copy:proto & bash scripts/build_proto.sh",
+        "build:proto": "npm run copy:proto & bash scripts/build_proto.sh",
         "copy:proto": "copyfiles -u 1 \"../protobuf-schemas/*.proto\" ./",
         "build": "tsc",
         "postbuild": "copyfiles -u 1 \"src/**/*.{json,sql,csv,graphql}\" build/",
