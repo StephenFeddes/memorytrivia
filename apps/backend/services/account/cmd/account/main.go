@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/database"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/grpc"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/http"
+	"github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/database"
+	gRPCServer "github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/grpc"
+	httpServer "github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/http"
 )
 
 
@@ -20,9 +20,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	httpServer := http.NewHTTPServer(":80", db)
+	httpServer := httpServer.NewHTTPServer(":80", db)
 	go httpServer.Run()
 
-	grpcServer := grpc.NewGRPCServer(":50051", db)
+	grpcServer := gRPCServer.NewGRPCServer(":50051", db)
 	grpcServer.Run()
 }

@@ -6,18 +6,6 @@ import (
 	"testing"
 )
 
-type mockDatabaseLobbyCreator struct {
-	shouldReturnError bool
-}
-
-// CreateLobby implements DatabaseLobbyCreator.
-func (m *mockDatabaseLobbyCreator) CreateLobby(size uint32, ownerID uint32) error {
-	if m.shouldReturnError {
-		return fmt.Errorf("error creating lobby")
-	}
-	return nil
-}
-
 func TestCreateLobby(t *testing.T) {
 	t.Run("should create a lobby", func(t *testing.T) {
 		// Arrange
@@ -74,4 +62,16 @@ func TestCreateLobby(t *testing.T) {
 			t.Error("expected error, got nil")
 		}
 	})
+}
+
+type mockDatabaseLobbyCreator struct {
+	shouldReturnError bool
+}
+
+// CreateLobby implements DatabaseLobbyCreator.
+func (m *mockDatabaseLobbyCreator) CreateLobby(size uint32, ownerID uint32) error {
+	if m.shouldReturnError {
+		return fmt.Errorf("error creating lobby")
+	}
+	return nil
 }

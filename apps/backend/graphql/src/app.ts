@@ -36,5 +36,5 @@ httpServer.listen({ port: PORT }, async () => {
     // Apply the Apollo Server middleware
     app.use("/graphql", expressMiddleware(server));
 
-    console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
+    console.log(`Server ready at http://localhost:${PORT}/graphql`);
 });

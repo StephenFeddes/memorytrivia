@@ -4,9 +4,9 @@ import (
 	"log"
 	"net"
 
-	getAccount "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/application/queries/getaccount"
-	"github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/database"
-	grpcHandler "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/presentation/grpc"
+	getAccount "github.com/StephenFeddes/memorytrivia/account/internal/application/query/getaccount"
+	"github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/database"
+	handler "github.com/StephenFeddes/memorytrivia/account/internal/presentation/grpc"
 	"google.golang.org/grpc"
 )
 
@@ -29,7 +29,7 @@ func (s *gRPCServer) Run() error {
 	grpcServer := grpc.NewServer()
 
 	getAccount := getAccount.NewGetAccount()
-	accountHandler := grpcHandler.NewAccountGRPCHandler(getAccount)
+	accountHandler := handler.NewAccountGRPCHandler(getAccount)
 	accountHandler.RegisterAccountServiceGRPCServer(grpcServer)
 
 	log.Printf("🚀 gRPC server is running on port %v", s.address)

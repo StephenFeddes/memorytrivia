@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package trivia;
 
-option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/trivia/api/grpc/protobufs";
+option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/trivia/internal/infrastructures/grpc/protobufs";
 
 service TriviaService {
     rpc GetQuestion(GetQuestionRequest) returns (Question) {};

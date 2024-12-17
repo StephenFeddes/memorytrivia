@@ -2,23 +2,25 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 
-	pb "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructure/grpc/protobufs"
+	"github.com/StephenFeddes/memorytrivia/account/internal/domain/entity"
+	pb "github.com/StephenFeddes/memorytrivia/account/internal/infrastructure/grpc/protobufs"
 	"google.golang.org/grpc"
 )
 
 type AccountGetter interface {
-	Execute(context.Context, uint32) (*pb.Account, error)
+	Execute(context.Context, uint32) (*entity.Account, error)
 }
 
 type AccountGRPCHandler struct {
-	lobbyGetter AccountGetter
+	accountGetter AccountGetter
 	pb.UnimplementedAccountServiceServer
 }
 
-func NewAccountGRPCHandler(lobbyGetter AccountGetter) *AccountGRPCHandler {
+func NewAccountGRPCHandler(accountGetter AccountGetter) *AccountGRPCHandler {
 	return &AccountGRPCHandler{
-		lobbyGetter: lobbyGetter,
+		accountGetter: accountGetter,
 	}
 }
 
@@ -27,9 +29,14 @@ func (h *AccountGRPCHandler) RegisterAccountServiceGRPCServer(grpcServer *grpc.S
 }
 
 func (h *AccountGRPCHandler) GetAccount(ctx context.Context, req *pb.GetAccountRequest) (*pb.Account, error) {
-	lobby, err := h.lobbyGetter.Execute(ctx, req.Id)
-	if err != nil {
-		return nil, err
-	}
-	return lobby, nil
+	//account, err := h.accountGetter.Execute(ctx, req.Id)
+	//if err != nil {
+	//	return nil, err
+	//}
+	fmt.Println("GetAccount")
+	return &pb.Account{
+		Id:       1,
+		Username: "Stephen",
+		Email:    "sfeddes@outlook.com",
+	}, nil
 }

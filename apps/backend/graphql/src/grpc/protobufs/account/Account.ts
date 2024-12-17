@@ -1,16 +1,15 @@
 // Original file: ../protobuf-schemas/account.proto
 
-import type { Long } from '@grpc/proto-loader';
 
 export interface Account {
-  'id'?: (number | string | Long);
+  'id'?: (number);
   'username'?: (string);
   'email'?: (string);
   'password'?: (string);
 }
 
 export interface Account__Output {
-  'id'?: (Long);
+  'id'?: (number);
   'username'?: (string);
   'email'?: (string);
   'password'?: (string);

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package account;
 
-option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/api/grpc";
+option go_package = "github.com/StephenFeddes/memorytrivia/apps/backend/services/account/internal/infrastructures/grpc/protobufs";
 
 service AccountService {
     rpc GetAccount(GetAccountRequest) returns (Account) {};
@@ -10,7 +10,7 @@ service AccountService {
 }
 
 message GetAccountRequest {
-    uint64 id = 1;
+    uint32 id = 1;
 }
 
 message CreateAccountRequest {
@@ -20,7 +20,7 @@ message CreateAccountRequest {
 }
 
 message Account {
-    uint64 id = 1;
+    uint32 id = 1;
     string username = 2;
     string email = 3;
     string password = 4;
